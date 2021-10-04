@@ -17,38 +17,36 @@ public class CreditCalculatorMain {
     }
 
     static int binarySearch(int l, int r, int requestedMonthlyAmount, int totalAmount) {
-        int prev = -1;
+        int month = -1;
         while (r > l) {
             int mid = l + (r - l) / 2;
-
             int monthlyPayment = calculateMonthlyPayment(mid, totalAmount);
-
             if (monthlyPayment > requestedMonthlyAmount)
                 l = mid + 1;
             else {
-                prev = mid;
+                month = mid;
                 r = mid;
             }
         }
-        return prev;
+        if (l==r){
+            return l;
+        }
+        return month;
     }
 
     public static void main(String args[]) {
-
-        int totalAmount = 2000;
+        int totalAmount = 3000;
         int requestedTerm = 12;
-        int requestedMonthlyAmount = 200;
-
-        // L = minimum ay sayidir => 1000/100 = 10
-        int L = totalAmount / requestedMonthlyAmount;
-        int R = 48;
-
-        int bestTerm = binarySearch(L, R, requestedMonthlyAmount, totalAmount);
+        int requestedMonthlyAmount = 275;
+        int bestTerm = binarySearch(requestedTerm, 48, requestedMonthlyAmount, totalAmount);
         int possibleMonthlyAmount = calculateMonthlyPayment(bestTerm, totalAmount);
         if (bestTerm > requestedTerm)
             System.out.println("sorry not possible  " + bestTerm + "  " + requestedTerm + "   " + possibleMonthlyAmount);
-        else
-            System.out.println("Best Term is " + bestTerm + "months");
+        else if (bestTerm == requestedTerm)
+            System.out.println("Success");
+        else {
+            System.out.println("requestedMonthlyAmount is low");
+        }
     }
 }
 
